@@ -2,17 +2,26 @@ package lab4;
 import lab4.client.GomokuClient;
 import lab4.data.GomokuGameState;
 import lab4.gui.*;
-
+/**
+ *  @author Anton Follinger
+ *  
+ * Main method where we create all objects for the game
+ */
 public class GomokuMain{
 	static void	main(String[] args){
 		
 		GomokuClient client;
 		
-        if(args.length == 1){
-            client = new GomokuClient(Integer.parseInt(args[0]));
+        if(args.length != 1){
+        	client = new GomokuClient(5555);          
         }
         else{
-            client = new GomokuClient(4555);
+        	try {
+        		client = new GomokuClient(Integer.parseInt(args[0]));
+        	}
+        	catch (NumberFormatException e) {
+        		client = new GomokuClient(5555);  
+			}
         }
 
         GomokuGameState gameState = new GomokuGameState(client);

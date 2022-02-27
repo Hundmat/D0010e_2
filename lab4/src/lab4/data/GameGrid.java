@@ -5,6 +5,8 @@ import java.util.Observable;
 import javax.print.attribute.Size2DSyntax;
 
 /**
+ * @author Anton Follinger
+ * 
  * Represents the 2-d game grid
  */
 
@@ -58,6 +60,8 @@ public class GameGrid extends Observable{
 	/**
 	 * Enters a move in the game grid
 	 * 
+	 * Controls if the position is taken
+	 * 
 	 * @param x the x position
 	 * @param y the y position
 	 * @param player
@@ -66,7 +70,7 @@ public class GameGrid extends Observable{
 	public boolean move(int x, int y, Player player){
 		
 		if(this.grid[x][y]!=Player.EMPTY){
-			return false;
+			return true;
 		}
 		
 		switch(player){
@@ -74,14 +78,14 @@ public class GameGrid extends Observable{
 				this.grid[x][y]=Player.ME;
 				setChanged();
 				notifyObservers();
-				return true;
+				return false;
 			case OTHER:
 				this.grid[x][y]=Player.OTHER;
 				setChanged();
 				notifyObservers();
-				return true;
-			default:
 				return false;
+			default:
+				return true;
 		}
 		
 	}

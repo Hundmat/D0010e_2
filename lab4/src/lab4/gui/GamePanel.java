@@ -12,11 +12,13 @@ import lab4.data.GameGrid;
 import lab4.data.GameGrid.Player;
 
 /**
+ * @author Anton Follinger
+ * 
  * A panel providing a graphical view of the game board
  */
 
 public class GamePanel extends JPanel implements Observer{
-
+	
 	private final int UNIT_SIZE = 20;
 	public GameGrid grid;
 	
@@ -46,10 +48,21 @@ public class GamePanel extends JPanel implements Observer{
 		return new int[] {x / UNIT_SIZE, y / UNIT_SIZE};
 	}
 	
+	/**
+	 * Repaint the grid
+	 * 
+	 * @param arg0 the x coordinates
+	 * @param arg1 the y coordinates
+	 */
 	public void update(Observable arg0, Object arg1) {
 		this.repaint();
 	}
 	
+	/**
+	 * Paint the grid
+	 * 
+	 * @param g the graphic object
+	 */
 	public void paintComponent(Graphics g){
 		super.paintComponent(g);
 		
