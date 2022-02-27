@@ -8,19 +8,19 @@ import lab4.gui.*;
  * Main method where we create all objects for the game
  */
 public class GomokuMain{
-	static void	main(String[] args){
+	public static void	main(String[] args){
 		
 		GomokuClient client;
 		
         if(args.length != 1){
-        	client = new GomokuClient(5555);          
+        	client = new GomokuClient(4000);          
         }
         else{
         	try {
         		client = new GomokuClient(Integer.parseInt(args[0]));
         	}
         	catch (NumberFormatException e) {
-        		client = new GomokuClient(5555);  
+        		client = new GomokuClient(4000);  
 			}
         }
 

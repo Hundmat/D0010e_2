@@ -30,6 +30,7 @@ public class GameGrid extends Observable{
 	 */
 	public GameGrid(int size){
 		this.size = size;
+		grid = new Player[size][size];
 		for(int x=0;x<this.size;x++){
 			for(int y=0;y<this.size;y++){
 				this.grid[x][y]=Player.EMPTY;
@@ -67,26 +68,17 @@ public class GameGrid extends Observable{
 	 * @param player
 	 * @return true if the insertion worked, false otherwise
 	 */
-	public boolean move(int x, int y, Player player){
+	public boolean move(int x, int y){
 		
-		if(this.grid[x][y]!=Player.EMPTY){
+		if(this.grid[x][y]==Player.EMPTY){
+			setChanged();
+			notifyObservers();
 			return true;
 		}
-		
-		switch(player){
-			case ME:
-				this.grid[x][y]=Player.ME;
-				setChanged();
-				notifyObservers();
-				return false;
-			case OTHER:
-				this.grid[x][y]=Player.OTHER;
-				setChanged();
-				notifyObservers();
-				return false;
-			default:
-				return true;
+		else {
+			return false;
 		}
+		
 		
 	}
 	
@@ -108,9 +100,111 @@ public class GameGrid extends Observable{
 	 * @param player the player to check for
 	 * @return true if player has 5 in row, false otherwise
 	 */
-	public boolean isWinner(Object player){
-		return false;
-		
-	}
-}	
+	public boolean isWinner(Player player) {
+
+        for (int x = 0; x < size; x++) {
+            for (int y = 0; y < size; y++) {
+                if (this.grid[x][y] == player.ME) {
+                    int currentInRow = 0;
+
+                    for (int i = 0; i < this.INROW; i++) {
+                        boolean check = CheckUp(x, y, player);
+                        if (check == true) {
+                            currentInRow += 1;
+                        } else {
+                            currentInRow = 0;
+                            break;
+                        }
+                        return true;
+                    }
+
+                    for (int i = 0; i < this.INROW; i++) {
+                        boolean check = CheckRight(x, y, player);
+                        if (check == true) {
+                            currentInRow += 1;
+                        } else {
+                            currentInRow = 0;
+                            break;
+                        }
+                        return true;
+                    }
+
+                    for (int i = 0; i < this.INROW; i++) {
+                        boolean check = CheckDiagonalRight(x, y, player);
+                        if (check == true) {
+                            currentInRow += 1;
+                        } else {
+                            currentInRow = 0;
+                            break;
+                        }
+                        return true;
+                    }
+
+                    for (int i = 0; i < this.INROW; i++) {
+                        boolean check = CheckDiagonalLeft(x, y, player);
+                        if (check == true) {
+                            currentInRow += 1;
+                        } else {
+                            currentInRow = 0;
+                            break;
+                        }
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean CheckUp(int x, int y, Player player) {
+        if (y == size) {
+            return false;
+        }
+
+        if (this.grid[x][y + 1] == player.ME) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean CheckRight(int x, int y, Player player) {
+        if (x == size) {
+            return false;
+        }
+
+        if (this.grid[x + 1][y] == player.ME) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean CheckDiagonalRight(int x, int y, Player player) {
+
+        if (x == size || y == size) {
+            return false;
+        }
+
+        if (this.grid[x + 1][y + 1] == player.ME) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean CheckDiagonalLeft(int x, int y, Player player) {
+        if (x == 0 || y == size) {
+            return false;
+        }
+
+        if (this.grid[x - 1][y + 1] == player.ME) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+}
+
 

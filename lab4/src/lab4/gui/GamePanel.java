@@ -74,21 +74,18 @@ public class GamePanel extends JPanel implements Observer{
     	    	switch (grid.getLocation(x, y)) {
 	    	    	case OTHER:
 	    	    		g.setColor(Color.RED);
+	    	    		g.fillRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
 	    			case ME:
-	    				g.setColor(Color.GREEN);    			 
+	    				g.setColor(Color.GREEN);
+	    				g.fillRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
+	    			case EMPTY:
+	    				g.setColor(Color.black);
+	    				g.drawRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
 	    			default:
 	    			   break;
     	    	}
-    	    	g.fillRect(x * UNIT_SIZE, y * UNIT_SIZE, UNIT_SIZE, UNIT_SIZE);
     	    }
         }
-        
-        for(int y = 0; y < grid.getSize(); y++) {
-    	    for(int x = 0; x < grid.getSize(); x++) {
-    	    	g.setColor(Color.BLACK);
-    	    	g.drawLine(x, y, x*UNIT_SIZE, y*UNIT_SIZE);
-    	    }
-    	}
 	}
 }
 
